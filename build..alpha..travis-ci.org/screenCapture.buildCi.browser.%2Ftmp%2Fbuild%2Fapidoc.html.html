@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/wp-api/node-wpapi"
-
-    >wpapi (v1.0.3)</a>
+    <a href="https://github.com/wp-api/node-wpapi">wpapi (v1.0.3)</a>
 </h1>
 <h4>An isomorphic JavaScript client for interacting with the WordPress REST API</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.wpapi">module wpapi</a><ol>
 
@@ -760,8 +753,8 @@
 		return new WPAPI( options );
 	}
 
-	if ( typeof options.endpoint !== &#x27;string&#x27; ) {
-		throw new Error( &#x27;options hash must contain an API endpoint URL string&#x27; );
+	if ( typeof options.endpoint !== 'string' ) {
+		throw new Error( 'options hash must contain an API endpoint URL string' );
 	}
 
 	// Dictionary to be filled by handlers for default namespaces
@@ -769,11 +762,11 @@
 
 	this._options = {
 		// Ensure trailing slash on endpoint URI
-		endpoint: options.endpoint.replace(  /\/?$/, &#x27;/&#x27; )
+		endpoint: options.endpoint.replace(  /\/?$/, '/' )
 	};
 
 	// If any authentication credentials were provided, assign them now
-	if ( options &#x26;&#x26; ( options.username || options.password || options.nonce ) ) {
+	if ( options &amp;&amp; ( options.username || options.password || options.nonce ) ) {
 		this.auth( options );
 	}
 
@@ -781,7 +774,7 @@
 		// Configure custom HTTP transport methods, if provided
 		.transport( options.transport )
 		// Bootstrap with a specific routes object, if provided
-		.bootstrap( options &#x26;&#x26; options.routes );
+		.bootstrap( options &amp;&amp; options.routes );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -820,7 +813,7 @@
 			return WPAPI.site( apiRootURL ).root().get();
 		})
 		.then(function( apiRootJSON ) {
-			// Instantiate &#x26; bootstrap with the discovered methods
+			// Instantiate &amp; bootstrap with the discovered methods
 			return new WPAPI({
 				endpoint: endpoint,
 				routes: apiRootJSON.routes
@@ -829,15 +822,15 @@
 		.catch(function( err ) {
 			console.error( err );
 			if ( endpoint ) {
-				console.warn( &#x27;Endpoint detected, proceeding despite error...&#x27; );
-				console.warn( &#x27;Binding to &#x27; + endpoint + &#x27; and assuming default routes&#x27; );
+				console.warn( 'Endpoint detected, proceeding despite error...' );
+				console.warn( 'Binding to ' + endpoint + ' and assuming default routes' );
 				return new WPAPI.site( endpoint );
 			}
-			throw new Error( &#x27;Autodiscovery failed&#x27; );
+			throw new Error( 'Autodiscovery failed' );
 		});
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ```
 
 ### Auto-Discovery
@@ -849,7 +842,7 @@ To utilize the auto-discovery functionality, call `WPAPI.<span class="apidocCode
  a WordPress REST API-enabled site:
 
 ```js
-var apiPromise = WPAPI.discover( &#x27;http://my-site.com&#x27; );
+var apiPromise = WPAPI.discover( 'http://my-site.com' );
 ```
 If auto-discovery succeeds this method returns a promise that will be resolved with a WPAPI client instance object configured specifically
  for your site. You can use that promise as the queue that your client instance is ready, then use the client normally within the
@@ -883,11 +876,11 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 * @example
 * These are equivalent:
 *
-*     var wp = new WPAPI({ endpoint: &#x27;http://my.blog.url/wp-json&#x27; });
-*     var wp = WPAPI.<span class="apidocCodeKeywordSpan">site</span>( &#x27;http://my.blog.url/wp-json&#x27; );
+*     var wp = new WPAPI({ endpoint: 'http://my.blog.url/wp-json' });
+*     var wp = WPAPI.<span class="apidocCodeKeywordSpan">site</span>( 'http://my.blog.url/wp-json' );
 *
 * `WPAPI.site` can take an optional API root response JSON object to use when
-* bootstrapping the client&#x27;s endpoint handler methods: if no second parameter
+* bootstrapping the client's endpoint handler methods: if no second parameter
 * is provided, the client instance is assumed to be using the default API
 * with no additional plugins and is initialized with handlers for only those
 * default API routes.
@@ -915,13 +908,13 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 	 */
 </span>	this._options = [
 		// Whitelisted options keys
-		&#x27;auth&#x27;,
-		&#x27;endpoint&#x27;,
-		&#x27;username&#x27;,
-		&#x27;password&#x27;,
-		&#x27;nonce&#x27;
+		'auth',
+		'endpoint',
+		'username',
+		'password',
+		'nonce'
 	].reduce(function( localOptions, key ) {
-		if ( options &#x26;&#x26; options[ key ] ) {
+		if ( options &amp;&amp; options[ key ] ) {
 			localOptions[ key ] = options[ key ];
 		}
 		return localOptions;
@@ -934,7 +927,7 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 	 * @type {Object}
 	 * @private
 	 */
-	this.transport = options &#x26;&#x26; options.transport;
+	this.transport = options &amp;&amp; options.transport;
 
 	/**
 	 * A hash of query parameters
@@ -954,9 +947,9 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 	 * @property _supportedMethods
 	 * @type Array
 	 * @private
-	 * @default [ &#x27;head&#x27;, &#x27;get&#x27;, &#x27;put&#x27;, &#x27;post&#x27;, &#x27;delete&#x27; ]
+	 * @default [ 'head', 'get', 'put', 'post', 'delete' ]
 	 */
-	this._supportedMethods = [ &#x27;head&#x27;, &#x27;get&#x27;, &#x27;put&#x27;, &#x27;post&#x27;, &#x27;delete&#x27; ];
+	this._supportedMethods = [ 'head', 'get', 'put', 'post', 'delete' ];
 
 	/**
 	 * A hash of values to assemble into the API request path
@@ -1010,18 +1003,18 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function locateAPIRootHeader( response ) {
 	// Define the expected link rel value per http://v2.wp-api.org/guide/discovery/
-	var rel = &#x27;https://api.w.org/&#x27;;
+	var rel = 'https://api.w.org/';
 
-	// Extract &#x26; parse the response link headers
-	var link = response.link || ( response.headers &#x26;&#x26; response.headers.link );
+	// Extract &amp; parse the response link headers
+	var link = response.link || ( response.headers &amp;&amp; response.headers.link );
 	var headers = parseLinkHeader( link );
-	var apiHeader = headers &#x26;&#x26; headers[ rel ];
+	var apiHeader = headers &amp;&amp; headers[ rel ];
 
-	if ( apiHeader &#x26;&#x26; apiHeader.url ) {
+	if ( apiHeader &amp;&amp; apiHeader.url ) {
 		return apiHeader.url;
 	}
 
-	throw new Error( &#x27;No header link found with rel=&#x22;https://api.w.org/&#x22;&#x27; );
+	throw new Error( 'No header link found with rel="https://api.w.org/"' );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -1051,7 +1044,7 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 
 			var EndpointRequest = createEndpointRequest( handlerSpec, resource, namespace );
 
-			// &#x22;handler&#x22; object is now fully prepared; create the factory method that
+			// "handler" object is now fully prepared; create the factory method that
 			// will instantiate and return a handler instance
 			handlers[ resource ] = function( options ) {
 				return new EndpointRequest( extend( {}, this._options, options ) );
@@ -1101,7 +1094,7 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 		 */
 </span>		this._levels = handlerSpec._levels;
 
-		// Configure handler for this endpoint&#x27;s root URL path &#x26; set namespace
+		// Configure handler for this endpoint's root URL path &amp; set namespace
 		this
 			.setPathPart( 0, resource )
 			.namespace( namespace );
@@ -1111,13 +1104,13 @@ wp/v2` namespace will be bound to your instance object itself. The rest can be a
 
 	// Mix in all available shortcut methods for GET request query parameters that
 	// are valid within this endpoint tree
-	if ( typeof handlerSpec._getArgs === &#x27;object&#x27; ) {
+	if ( typeof handlerSpec._getArgs === 'object' ) {
 		Object.keys( handlerSpec._getArgs ).forEach(function( supportedQueryParam ) {
 			var mixinsForParam = mixins[ supportedQueryParam ];
 
 			// Only proceed if there is a mixin available AND the specified mixins will
 			// not overwrite any previously-set prototype method
-			if ( typeof mixinsForParam === &#x27;object&#x27; ) {
+			if ( typeof mixinsForParam === 'object' ) {
 				Object.keys( mixinsForParam ).forEach(function( methodName ) {
 					applyMixin( EndpointRequest.prototype, methodName, mixinsForParam[ methodName ] );
 				});
@@ -1152,7 +1145,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -1172,7 +1165,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
     <ul>
     <li>description and source-code<pre class="apidocCodePre">day = function ( day ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
-</span>	return filterMixins.filter.call( this, &#x27;day&#x27;, day );
+</span>	return filterMixins.filter.call( this, 'day', day );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
@@ -1182,8 +1175,8 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
  date query methods are available to return posts from a specific month, day or year:
 
 * `.year( year )`: find items published in the specified year
-* `.month( month )`: find items published in the specified month, designated by the month index (1&#x26;ndash;12) or name (*e.g.* &#
-x22;February&#x22;)
+* `.month( month )`: find items published in the specified month, designated by the month index (1&amp;ndash;12) or name (*e.g.* &amp;#
+x22;February")
 * `.<span class="apidocCodeKeywordSpan">day</span>( day )`: find items published on the specified day
 
 ### Uploading Media
@@ -1206,13 +1199,13 @@ The file to upload can be specified as
     <li>description and source-code<pre class="apidocCodePre">filter = function ( props, value ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
 </span>
-	if ( ! props || typeof props === &#x27;string&#x27; &#x26;&#x26; value === undefined ) {
+	if ( ! props || typeof props === 'string' &amp;&amp; value === undefined ) {
 		// We have no filter to set, or no value to set for that filter
 		return this;
 	}
 
 	// convert the property name string `props` and value `value` into an object
-	if ( typeof props === &#x27;string&#x27; ) {
+	if ( typeof props === 'string' ) {
 		props = keyValToObj( props, value );
 	}
 
@@ -1225,18 +1218,18 @@ If your environment supports this parameter, other filtering methods will be ava
 ](http://wp-api.org/node-wpapi/using-the-client/#auto-discovery), which will auto-detect the availability of `filter`:
 
 ```js
-WPAPI.discover( &#x27;http://mysite.com&#x27; )
+WPAPI.discover( 'http://mysite.com' )
     .then(function( site ) {
 // Apply an arbitrary `filter` query parameter:
-// All posts belonging to author with nicename &#x22;jadenbeirne&#x22;
-wp.posts().<span class="apidocCodeKeywordSpan">filter</span>( &#x27;author_name&#x27;, &#x27;jadenbeirne&#x27; ).get();
+// All posts belonging to author with nicename "jadenbeirne"
+wp.posts().<span class="apidocCodeKeywordSpan">filter</span>( 'author_name', 'jadenbeirne' ).get();
 
 // Query by the slug of a category or tag
-// Get all posts in category &#x22;islands&#x22; and tags &#x22;clouds&#x22; &#x26; &#x22;sunset&#x22;
-// (filter can either accept two parameters, as above where it&#x27;s called with
+// Get all posts in category "islands" and tags "clouds" &amp; "sunset"
+// (filter can either accept two parameters, as above where it's called with
 // a key and a value, or an object of parameter keys and values, as below)
 wp.posts().filter({
-    category_name: &#x27;islands&#x27;,
+    category_name: 'islands',
 ...</pre></li>
     </ul>
 
@@ -1252,9 +1245,9 @@ wp.posts().filter({
     <li>description and source-code<pre class="apidocCodePre">month = function ( month ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
 </span>	var monthDate;
-	if ( typeof month === &#x27;string&#x27; ) {
+	if ( typeof month === 'string' ) {
 		// Append a arbitrary day and year to the month to parse the string into a Date
-		monthDate = new Date( Date.parse( month + &#x27; 1, 2012&#x27; ) );
+		monthDate = new Date( Date.parse( month + ' 1, 2012' ) );
 
 		// If the generated Date is NaN, then the passed string is not a valid month
 		if ( isNaN( monthDate ) ) {
@@ -1266,8 +1259,8 @@ wp.posts().filter({
 	}
 
 	// If month is a Number, add the monthnum filter to the request
-	if ( typeof month === &#x27;number&#x27; ) {
-		return filterMixins.filter.call( this, &#x27;monthnum&#x27;, month );
+	if ( typeof month === 'number' ) {
+		return filterMixins.filter.call( this, 'monthnum', month );
 	}
 
 	return this;
@@ -1282,7 +1275,7 @@ wp.posts().filter({
 
 * `.year( year )`: find items published in the specified year
 * `.<span class="apidocCodeKeywordSpan">month</span>( month )`: find items published in the specified month, designated by the month
- index (1&#x26;ndash;12) or name (*e.g.* &#x22;February&#x22;)
+ index (1&amp;ndash;12) or name (*e.g.* "February")
 * `.day( day )`: find items published on the specified day
 
 ### Uploading Media
@@ -1304,7 +1297,7 @@ The file to upload can be specified as
     <ul>
     <li>description and source-code<pre class="apidocCodePre">path = function ( path ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
-</span>	return filterMixins.filter.call( this, &#x27;pagename&#x27;, path );
+</span>	return filterMixins.filter.call( this, 'pagename', path );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 - `wp.posts()`: get a collection of posts (default query)
@@ -1314,7 +1307,7 @@ The file to upload can be specified as
 * **pages**
 - `wp.pages()`: get a collection of page items
 - `wp.pages().id( n )`: get the page with numeric ID *n*
-- `wp.pages().<span class="apidocCodeKeywordSpan">path</span>( &#x27;path/str&#x27; )`: get the page with the root-relative URL
+- `wp.pages().<span class="apidocCodeKeywordSpan">path</span>( 'path/str' )`: get the page with the root-relative URL
 path `path/str`
 - `wp.pages().id( n ).revisions()`: get a collection of revisions for the page with ID *n*
 - `wp.pages().id( n ).revisions( rn )`: get revision *rn* for the page with ID *n*
@@ -1340,41 +1333,41 @@ path `path/str`
 </span>	var termIsArray = Array.isArray( term );
 	var termIsNumber = termIsArray ?
 		term.reduce(function( allAreNumbers, term ) {
-			return allAreNumbers &#x26;&#x26; typeof term === &#x27;number&#x27;;
+			return allAreNumbers &amp;&amp; typeof term === 'number';
 		}, true ) :
-		typeof term === &#x27;number&#x27;;
+		typeof term === 'number';
 	var termIsString = termIsArray ?
 		term.reduce(function( allAreStrings, term ) {
-			return allAreStrings &#x26;&#x26; typeof term === &#x27;string&#x27;;
+			return allAreStrings &amp;&amp; typeof term === 'string';
 		}, true ) :
-		typeof term === &#x27;string&#x27;;
+		typeof term === 'string';
 	var taxonomyTerms;
 
-	if ( ! termIsString &#x26;&#x26; ! termIsNumber ) {
-		throw new Error( &#x27;term must be a number, string, or array of numbers or strings&#x27; );
+	if ( ! termIsString &amp;&amp; ! termIsNumber ) {
+		throw new Error( 'term must be a number, string, or array of numbers or strings' );
 	}
 
-	if ( taxonomy === &#x27;category&#x27; ) {
+	if ( taxonomy === 'category' ) {
 		if ( termIsString ) {
-			// Query param for filtering by category slug is &#x22;category_name&#x22;
-			taxonomy = &#x27;category_name&#x27;;
+			// Query param for filtering by category slug is "category_name"
+			taxonomy = 'category_name';
 		} else {
-			// The boolean check above ensures that if taxonomy === &#x27;category&#x27; and
+			// The boolean check above ensures that if taxonomy === 'category' and
 			// term is not a string, then term must be a number and therefore an ID:
-			// Query param for filtering by category ID is &#x22;cat&#x22;
-			taxonomy = &#x27;cat&#x27;;
+			// Query param for filtering by category ID is "cat"
+			taxonomy = 'cat';
 		}
-	} else if ( taxonomy === &#x27;post_tag&#x27; ) {
+	} else if ( taxonomy === 'post_tag' ) {
 		// tag is used in place of post_tag in the public query variables
-		taxonomy = &#x27;tag&#x27;;
+		taxonomy = 'tag';
 	}
 
 	// Ensure the taxonomy filters object is available
 	this._taxonomyFilters = this._taxonomyFilters || {};
 
-	// Ensure there&#x27;s an array of terms available for this taxonomy
+	// Ensure there's an array of terms available for this taxonomy
 	taxonomyTerms = ( this._taxonomyFilters[ taxonomy ] || [] )
-		// Insert the provided terms into the specified taxonomy&#x27;s terms array
+		// Insert the provided terms into the specified taxonomy's terms array
 		.concat( term )
 		// Sort array
 		.sort( alphaNumericSort );
@@ -1392,7 +1385,7 @@ path `path/str`
     - `wp.comments().id( n )`: get the comment with ID *n*
 * **taxonomies**
     - `wp.taxonomies()`: retrieve all registered taxonomies
-    - `wp.taxonomies().<span class="apidocCodeKeywordSpan">taxonomy</span>( &#x27;taxonomy_name&#x27; )`: get a specific taxonomy
+    - `wp.taxonomies().<span class="apidocCodeKeywordSpan">taxonomy</span>( 'taxonomy_name' )`: get a specific taxonomy
  object with name *taxonomy_name*
 * **categories**
     - `wp.categories()`: retrieve all registered categories
@@ -1415,7 +1408,7 @@ path `path/str`
     <ul>
     <li>description and source-code<pre class="apidocCodePre">year = function ( year ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
-</span>	return filterMixins.filter.call( this, &#x27;year&#x27;, year );
+</span>	return filterMixins.filter.call( this, 'year', year );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
     });
@@ -1427,8 +1420,8 @@ path `path/str`
  date query methods are available to return posts from a specific month, day or year:
 
 * `.<span class="apidocCodeKeywordSpan">year</span>( year )`: find items published in the specified year
-* `.month( month )`: find items published in the specified month, designated by the month index (1&#x26;ndash;12) or name (*e.g.* &#
-x22;February&#x22;)
+* `.month( month )`: find items published in the specified month, designated by the month index (1&amp;ndash;12) or name (*e.g.* &amp;#
+x22;February")
 * `.day( day )`: find items published on the specified day
 
 ### Uploading Media
@@ -1452,11 +1445,11 @@ Files may be uploaded to the WordPress media library by creating a media record 
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _httpDelete( wpreq, data, callback ) {
-	if ( ! callback &#x26;&#x26; typeof data === &#x27;function&#x27; ) {
+	if ( ! callback &amp;&amp; typeof data === 'function' ) {
 		callback = data;
 		data = null;
 	}
-	checkMethodSupport( &#x27;delete&#x27;, wpreq );
+	checkMethodSupport( 'delete', wpreq );
 	var url = wpreq.toString();
 	var request = _auth( agent.del( url ), wpreq._options, true ).send( data );
 
@@ -1470,8 +1463,7 @@ Files may be uploaded to the WordPress media library by creating a media record 
 ```
 The `wp` object has endpoint handler methods for every endpoint that ships with the default WordPress REST API plugin.
 
-Once you have used the chaining methods to describe a resource, you may call `.create()`, `.get()`, `.update()` or `.<span class
-="apidocCodeKeywordSpan">delete</span>()`  to send the API request to create, read, update or delete content within WordPress. These
+Once you have used the chaining methods to describe a resource, you may call `.create()`, `.get()`, `.update()` or `.<span class="apidocCodeKeywordSpan">delete</span>()`  to send the API request to create, read, update or delete content within WordPress. These
  methods are documented in further detail below.
 
 ### Self-signed (Insecure) HTTPS Certificates
@@ -1480,7 +1472,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -1494,7 +1486,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _httpGet( wpreq, callback ) {
-	checkMethodSupport( &#x27;get&#x27;, wpreq );
+	checkMethodSupport( 'get', wpreq );
 	var url = wpreq.toString();
 
 	var request = _auth( agent.get( url ), wpreq._options );
@@ -1531,7 +1523,7 @@ wp.posts().<span class="apidocCodeKeywordSpan">get</span>(function( err, data ) 
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _httpHead( wpreq, callback ) {
-	checkMethodSupport( &#x27;head&#x27;, wpreq );
+	checkMethodSupport( 'head', wpreq );
 	var url = wpreq.toString();
 	var request = _auth( agent.head( url ), wpreq._options );
 
@@ -1543,7 +1535,7 @@ wp.posts().<span class="apidocCodeKeywordSpan">get</span>(function( err, data ) 
  * @return {Promise} A promise to the header results of the HTTP request
  */
 function _httpHead( wpreq, callback ) {
-	checkMethodSupport( &#x27;head&#x27;, wpreq );
+	checkMethodSupport( 'head', wpreq );
 	var url = wpreq.toString();
 	var request = _auth( agent.<span class="apidocCodeKeywordSpan">head</span>( url ), wpreq._options );
 
@@ -1566,7 +1558,7 @@ module.exports = {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _httpPost( wpreq, data, callback ) {
-	checkMethodSupport( &#x27;post&#x27;, wpreq );
+	checkMethodSupport( 'post', wpreq );
 	var url = wpreq.toString();
 	data = data || {};
 	var request = _auth( agent.post( url ), wpreq._options, true );
@@ -1575,7 +1567,7 @@ module.exports = {
 		// Data must be form-encoded alongside image attachment
 		request = objectReduce( data, function( req, value, key ) {
 			return req.field( key, value );
-		}, request.attach( &#x27;file&#x27;, wpreq._attachment, wpreq._attachmentName ) );
+		}, request.attach( 'file', wpreq._attachment, wpreq._attachmentName ) );
 	} else {
 		request = request.send( data );
 	}
@@ -1584,10 +1576,10 @@ module.exports = {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```js
-site.handler = site.registerRoute( &#x27;myplugin/v1&#x27;, &#x27;collection/(?P&#x3c;id&#x3e;)&#x27;, {
+site.handler = site.registerRoute( 'myplugin/v1', 'collection/(?P&lt;id&gt;)', {
     // Listing any of these parameters will assign the built-in
     // chaining method that handles the parameter:
-    params: [ &#x27;before&#x27;, &#x27;after&#x27;, &#x27;author&#x27;, &#x27;parent&#x27;, &#x27;post&#x27; ]
+    params: [ 'before', 'after', 'author', 'parent', 'post' ]
 });
 // yields
 site.handler().<span class="apidocCodeKeywordSpan">post</span>( 8 ).author( 92 ).before( dateObj )...
@@ -1597,7 +1589,7 @@ If you wish to set custom parameters, for example to query by the custom taxonom
 usual:
 
 ```js
-site.handler().param( &#x27;genre&#x27;, genreTermId );
+site.handler().param( 'genre', genreTermId );
 ```
 ...</pre></li>
     </ul>
@@ -1612,7 +1604,7 @@ site.handler().param( &#x27;genre&#x27;, genreTermId );
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function _httpPut( wpreq, data, callback ) {
-	checkMethodSupport( &#x27;put&#x27;, wpreq );
+	checkMethodSupport( 'put', wpreq );
 	var url = wpreq.toString();
 	data = data || {};
 
@@ -1624,7 +1616,7 @@ site.handler().param( &#x27;genre&#x27;, genreTermId );
 * @return {Promise} A promise to the results of the HTTP request
 */
 function _httpPut( wpreq, data, callback ) {
-	checkMethodSupport( &#x27;put&#x27;, wpreq );
+	checkMethodSupport( 'put', wpreq );
 	var url = wpreq.toString();
 	data = data || {};
 
@@ -1655,18 +1647,18 @@ function _httpPut( wpreq, data, callback ) {
     <ul>
     <li>description and source-code<pre class="apidocCodePre">after = function ( date ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
-</span>	return this.param( &#x27;after&#x27;, new Date( date ).toISOString() );
+</span>	return this.param( 'after', new Date( date ).toISOString() );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-// Find posts in status &#x22;future&#x22; or &#x22;draft&#x22;
-wp.posts().status([ &#x27;draft&#x27;, &#x27;future&#x27; ])...
+// Find posts in status "future" or "draft"
+wp.posts().status([ 'draft', 'future' ])...
 
-// Find all categories containing the word &#x22;news&#x22;
-wp.categories().search( &#x27;news&#x27; )...
+// Find all categories containing the word "news"
+wp.categories().search( 'news' )...
 
 // Find posts from March 2013 (provide a Date object or full ISO-8601 date):
-wp.posts().before( &#x27;2013-04-01T00:00:00.000Z&#x27; ).<span class="apidocCodeKeywordSpan">after</span>( new Date( &#x27;March
- 01, 2013&#x27; ) )...
+wp.posts().before( '2013-04-01T00:00:00.000Z' ).<span class="apidocCodeKeywordSpan">after</span>( new Date( 'March
+ 01, 2013' ) )...
 
 // Return ONLY sticky posts
 wp.posts().sticky( true )...
@@ -1690,19 +1682,19 @@ wp.posts().sticky( false )...
 </span>	if ( author === undefined ) {
 		return this;
 	}
-	if ( typeof author === &#x27;string&#x27; ) {
-		this.param( &#x27;author&#x27;, null );
-		return filter.call( this, &#x27;author_name&#x27;, author );
+	if ( typeof author === 'string' ) {
+		this.param( 'author', null );
+		return filter.call( this, 'author_name', author );
 	}
-	if ( typeof author === &#x27;number&#x27; ) {
-		filter.call( this, &#x27;author_name&#x27;, null );
-		return this.param( &#x27;author&#x27;, author );
+	if ( typeof author === 'number' ) {
+		filter.call( this, 'author_name', null );
+		return this.param( 'author', author );
 	}
 	if ( author === null ) {
-		filter.call( this, &#x27;author_name&#x27;, null );
-		return this.param( &#x27;author&#x27;, null );
+		filter.call( this, 'author_name', null );
+		return this.param( 'author', null );
 	}
-	throw new Error( &#x27;author must be either a nicename string or numeric ID&#x27; );
+	throw new Error( 'author must be either a nicename string or numeric ID' );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 This library provides convenience methods for many of the most common parameters, like `search=` (search for a string in post title
@@ -1710,16 +1702,16 @@ This library provides convenience methods for many of the most common parameters
 
 ```js
 // Find a page with a specific slug
-wp.pages().slug( &#x27;about&#x27; )...
+wp.pages().slug( 'about' )...
 
 // Find a post authored by the user with ID #42
 wp.posts().<span class="apidocCodeKeywordSpan">author</span>( 42 )...
 
 // Find trashed posts
-wp.posts().status( &#x27;trash&#x27; )...
+wp.posts().status( 'trash' )...
 
-// Find posts in status &#x22;future&#x22; or &#x22;draft&#x22;
-wp.posts().status([ &#x27;draft&#x27;, &#x27;future&#x27; ])...
+// Find posts in status "future" or "draft"
+wp.posts().status([ 'draft', 'future' ])...
 ...</pre></li>
     </ul>
 
@@ -1734,18 +1726,18 @@ wp.posts().status([ &#x27;draft&#x27;, &#x27;future&#x27; ])...
     <ul>
     <li>description and source-code<pre class="apidocCodePre">before = function ( date ) {
 	<span class="apidocCodeCommentSpan">/* jshint validthis:true */
-</span>	return this.param( &#x27;before&#x27;, new Date( date ).toISOString() );
+</span>	return this.param( 'before', new Date( date ).toISOString() );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-// Find posts in status &#x22;future&#x22; or &#x22;draft&#x22;
-wp.posts().status([ &#x27;draft&#x27;, &#x27;future&#x27; ])...
+// Find posts in status "future" or "draft"
+wp.posts().status([ 'draft', 'future' ])...
 
-// Find all categories containing the word &#x22;news&#x22;
-wp.categories().search( &#x27;news&#x27; )...
+// Find all categories containing the word "news"
+wp.categories().search( 'news' )...
 
 // Find posts from March 2013 (provide a Date object or full ISO-8601 date):
-wp.posts().<span class="apidocCodeKeywordSpan">before</span>( &#x27;2013-04-01T00:00:00.000Z&#x27; ).after( new Date( &#x27;March
- 01, 2013&#x27; ) )...
+wp.posts().<span class="apidocCodeKeywordSpan">before</span>( '2013-04-01T00:00:00.000Z' ).after( new Date( 'March
+ 01, 2013' ) )...
 
 // Return ONLY sticky posts
 wp.posts().sticky( true )...
@@ -1802,7 +1794,7 @@ or sent to the server via `.get()`, `.create()`, `.update()`, `.delete()`, `.hea
 </span>	if ( argumentIsNumeric( category ) ) {
 		return parameterMixins.categories.call( this, category );
 	}
-	return taxonomy.call( this, &#x27;category&#x27;, category );
+	return taxonomy.call( this, 'category', category );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -1830,9 +1822,9 @@ It is also possible to add your own slug-oriented query parameters to a site tha
 Just as `.categories()` and `.tags()` can be used to return posts that are associated with one or more taxonomies, two methods exist
  to exclude posts by their term associations.
 
-- `.<span class="apidocCodeKeywordSpan">excludeCategories</span>()` is a shortcut for `.param( &#x27;categories_exclude&#x27;, ... )`
+- `.<span class="apidocCodeKeywordSpan">excludeCategories</span>()` is a shortcut for `.param( 'categories_exclude', ... )`
 which excludes results associated with the provided category term IDs
-- `.excludeTags()` is a shortcut for `.param( &#x27;tags_exclude&#x27;, ... )` which excludes results associated with the provided
+- `.excludeTags()` is a shortcut for `.param( 'tags_exclude', ... )` which excludes results associated with the provided
  tag term IDs
 
 **Custom Taxonomies**
@@ -1841,7 +1833,7 @@ Just as the `?categories` and `?categories_exclude` parameters are available for
  that is registered with a `rest_base` argument has a `?{taxonomy rest_base}` and `?{taxonomy rest_base}_exclude` parameter available
 , which can be set directly using `.param`. For the custom taxonomy `genres`, for example:
 
-- `wp.posts().param( &#x27;genres&#x27;, [ array of genre term IDs ])`: return only records associated with any of the provided
+- `wp.posts().param( 'genres', [ array of genre term IDs ])`: return only records associated with any of the provided
 genres
 ...</pre></li>
     </ul>
@@ -1868,9 +1860,9 @@ It is also possible to add your own slug-oriented query parameters to a site tha
 Just as `.categories()` and `.tags()` can be used to return posts that are associated with one or more taxonomies, two methods exist
  to exclude posts by their term associations.
 
-- `.excludeCategories()` is a shortcut for `.param( &#x27;categories_exclude&#x27;, ... )` which excludes results associated with
+- `.excludeCategories()` is a shortcut for `.param( 'categories_exclude', ... )` which excludes results associated with
  the provided category term IDs
-- `.<span class="apidocCodeKeywordSpan">excludeTags</span>()` is a shortcut for `.param( &#x27;tags_exclude&#x27;, ... )` which
+- `.<span class="apidocCodeKeywordSpan">excludeTags</span>()` is a shortcut for `.param( 'tags_exclude', ... )` which
 excludes results associated with the provided tag term IDs
 
 **Custom Taxonomies**
@@ -1879,9 +1871,9 @@ Just as the `?categories` and `?categories_exclude` parameters are available for
  that is registered with a `rest_base` argument has a `?{taxonomy rest_base}` and `?{taxonomy rest_base}_exclude` parameter available
 , which can be set directly using `.param`. For the custom taxonomy `genres`, for example:
 
-- `wp.posts().param( &#x27;genres&#x27;, [ array of genre term IDs ])`: return only records associated with any of the provided
+- `wp.posts().param( 'genres', [ array of genre term IDs ])`: return only records associated with any of the provided
 genres
-- `wp.posts().param( &#x27;genres_exclude&#x27;, [ array of genre term IDs ])`: return only records associated with none of the
+- `wp.posts().param( 'genres_exclude', [ array of genre term IDs ])`: return only records associated with none of the
 provided genres
 ...</pre></li>
     </ul>
@@ -1908,12 +1900,12 @@ provided genres
 * @example
 *
 *     wp.pages().<span class="apidocCodeKeywordSpan">parent</span>( 3 ).then(function( pages ) {
-*       // console.log( &#x27;all of these pages are nested below page ID#3:&#x27; );
+*       // console.log( 'all of these pages are nested below page ID#3:' );
 *       // console.log( pages );
 *     });
 *
 *     wp.categories().parent( 42 ).then(function( categories ) {
-*       console.log( &#x27;all of these categories are sub-items of cat ID#42:&#x27; );
+*       console.log( 'all of these categories are sub-items of cat ID#42:' );
 *       console.log( categories );
 ...</pre></li>
     </ul>
@@ -1939,12 +1931,12 @@ wp.posts().sticky( true )...
 wp.posts().sticky( false )...
 
 // Supply the password for a password-protected post
-wp.posts().id( 2501 ).<span class="apidocCodeKeywordSpan">password</span>( &#x27;correct horse battery staple&#x27; )...
+wp.posts().id( 2501 ).<span class="apidocCodeKeywordSpan">password</span>( 'correct horse battery staple' )...
 ```
 
-#### Paging &#x26; Sorting
+#### Paging &amp; Sorting
 
-Convenience methods are also available to set paging &#x26; sorting properties like `page`, `per_page` (available as `.perPage()`), `
+Convenience methods are also available to set paging &amp; sorting properties like `page`, `per_page` (available as `.perPage()`), `
 offset`, `order` and `orderby`:
 
 ```js
@@ -1966,10 +1958,10 @@ offset`, `order` and `orderby`:
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```js
-site.handler = site.registerRoute( &#x27;myplugin/v1&#x27;, &#x27;collection/(?P&#x3c;id&#x3e;)&#x27;, {
+site.handler = site.registerRoute( 'myplugin/v1', 'collection/(?P&lt;id&gt;)', {
     // Listing any of these parameters will assign the built-in
     // chaining method that handles the parameter:
-    params: [ &#x27;before&#x27;, &#x27;after&#x27;, &#x27;author&#x27;, &#x27;parent&#x27;, &#x27;post&#x27; ]
+    params: [ 'before', 'after', 'author', 'parent', 'post' ]
 });
 // yields
 site.handler().<span class="apidocCodeKeywordSpan">post</span>( 8 ).author( 92 ).before( dateObj )...
@@ -1979,7 +1971,7 @@ If you wish to set custom parameters, for example to query by the custom taxonom
 usual:
 
 ```js
-site.handler().param( &#x27;genre&#x27;, genreTermId );
+site.handler().param( 'genre', genreTermId );
 ```
 ...</pre></li>
     </ul>
@@ -2003,17 +1995,17 @@ site.handler().param( &#x27;genre&#x27;, genreTermId );
 -the-client/#auto-discovery) to query for custom taxonomy terms
 * **types**
 - `wp.types()`: get a collection of all registered public post types
-- `wp.types().type( &#x27;cpt_name&#x27; )`: get the object for the custom post type with the name *cpt_name*
+- `wp.types().type( 'cpt_name' )`: get the object for the custom post type with the name *cpt_name*
 * **statuses**
-- `wp.statuses()`: get a collection of all registered public post statuses (if the query is authenticated&#x26;mdash;will just display
- &#x22;published&#x22; if unauthenticated)
-- `wp.statuses().<span class="apidocCodeKeywordSpan">status</span>( &#x27;slug&#x27; )`: get the object for the status with the
+- `wp.statuses()`: get a collection of all registered public post statuses (if the query is authenticated&amp;mdash;will just display
+ "published" if unauthenticated)
+- `wp.statuses().<span class="apidocCodeKeywordSpan">status</span>( 'slug' )`: get the object for the status with the
 slug *slug*
 * **users**
 - `wp.users()`: get a collection of users (will show only users with published content if request is not authenticated)
 - `wp.users().id( n )`: get the user with ID *n* (does not require authentication if that user is a published author within the
 blog)
-- `wp.users().me()`: get the authenticated user&#x27;s record
+- `wp.users().me()`: get the authenticated user's record
 * **media**
 - `wp.media()`: get a collection of media objects (attachments)
 - `wp.media().id( n )`: get media object with ID *n*
@@ -2034,11 +2026,11 @@ blog)
 </span>		return this.param( param, val );
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-// Find all categories containing the word &#x22;news&#x22;
-wp.categories().search( &#x27;news&#x27; )...
+// Find all categories containing the word "news"
+wp.categories().search( 'news' )...
 
 // Find posts from March 2013 (provide a Date object or full ISO-8601 date):
-wp.posts().before( &#x27;2013-04-01T00:00:00.000Z&#x27; ).after( new Date( &#x27;March 01, 2013&#x27; ) )...
+wp.posts().before( '2013-04-01T00:00:00.000Z' ).after( new Date( 'March 01, 2013' ) )...
 
 // Return ONLY sticky posts
 wp.posts().<span class="apidocCodeKeywordSpan">sticky</span>( true )...
@@ -2047,7 +2039,7 @@ wp.posts().<span class="apidocCodeKeywordSpan">sticky</span>( true )...
 wp.posts().sticky( false )...
 
 // Supply the password for a password-protected post
-wp.posts().id( 2501 ).password( &#x27;correct horse battery staple&#x27; )...
+wp.posts().id( 2501 ).password( 'correct horse battery staple' )...
 ```
 ...</pre></li>
     </ul>
@@ -2066,7 +2058,7 @@ wp.posts().id( 2501 ).password( &#x27;correct horse battery staple&#x27; )...
 </span>	if ( argumentIsNumeric( tag ) ) {
 		return parameterMixins.tags.call( this, tag );
 	}
-	return taxonomy.call( this, &#x27;tag&#x27;, tag );
+	return taxonomy.call( this, 'tag', tag );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2131,8 +2123,8 @@ or sent to the server via `.get()`, `.create()`, `.update()`, `.delete()`, `.hea
 		.filter(function( childNode ) {
 			return childNode.namedGroup === true;
 		}) : [];
-	var dynamicChild = dynamicChildren.length === 1 &#x26;&#x26; dynamicChildren[ 0 ];
-	var dynamicChildLevel = dynamicChild &#x26;&#x26; dynamicChild.level;
+	var dynamicChild = dynamicChildren.length === 1 &amp;&amp; dynamicChildren[ 0 ];
+	var dynamicChildLevel = dynamicChild &amp;&amp; dynamicChild.level;
 
 	if ( node.namedGroup ) {
 		<span class="apidocCodeCommentSpan">/**
@@ -2182,7 +2174,7 @@ or sent to the server via `.get()`, `.create()`, `.update()`, `.delete()`, `.hea
 			// If this node has exactly one dynamic child, this method may act as
 			// a setter for that child node. `dynamicChildLevel` will be falsy if the
 			// node does not have a child or has multiple children.
-			if ( val !== undefined &#x26;&#x26; dynamicChildLevel ) {
+			if ( val !== undefined &amp;&amp; dynamicChildLevel ) {
 				this.setPathPart( dynamicChildLevel, val );
 			}
 			return this;
@@ -2207,7 +2199,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -2228,17 +2220,17 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
     <li>description and source-code<pre class="apidocCodePre">function createNodeHandlerSpec( routeDefinition, resource ) {
 
 	var handler = {
-		// A &#x22;path&#x22; is an ordered (by key) set of values composed into the final URL
+		// A "path" is an ordered (by key) set of values composed into the final URL
 		_path: {
-			&#x27;0&#x27;: resource
+			'0': resource
 		},
 
-		// A &#x22;level&#x22; is a level-keyed object representing the valid options for
+		// A "level" is a level-keyed object representing the valid options for
 		// one level of the resource URL
 		_levels: {},
 
 		// Objects that hold methods and properties which will be copied to
-		// instances of this endpoint&#x27;s handler
+		// instances of this endpoint's handler
 		_setters: {},
 
 		// Arguments (query parameters) that may be set in GET requests to endpoints
@@ -2249,7 +2241,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 
 	// Walk the tree
 	Object.keys( routeDefinition ).forEach(function( routeDefProp ) {
-		if ( routeDefProp !== &#x27;_getArgs&#x27; ) {
+		if ( routeDefProp !== '_getArgs' ) {
 			extractSetterFromNode( handler, routeDefinition[ routeDefProp ] );
 		}
 	});
@@ -2274,7 +2266,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -2323,13 +2315,13 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 	 */
 </span>	this._options = [
 		// Whitelisted options keys
-		&#x27;auth&#x27;,
-		&#x27;endpoint&#x27;,
-		&#x27;username&#x27;,
-		&#x27;password&#x27;,
-		&#x27;nonce&#x27;
+		'auth',
+		'endpoint',
+		'username',
+		'password',
+		'nonce'
 	].reduce(function( localOptions, key ) {
-		if ( options &#x26;&#x26; options[ key ] ) {
+		if ( options &amp;&amp; options[ key ] ) {
 			localOptions[ key ] = options[ key ];
 		}
 		return localOptions;
@@ -2342,7 +2334,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 	 * @type {Object}
 	 * @private
 	 */
-	this.transport = options &#x26;&#x26; options.transport;
+	this.transport = options &amp;&amp; options.transport;
 
 	/**
 	 * A hash of query parameters
@@ -2362,9 +2354,9 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 	 * @property _supportedMethods
 	 * @type Array
 	 * @private
-	 * @default [ &#x27;head&#x27;, &#x27;get&#x27;, &#x27;put&#x27;, &#x27;post&#x27;, &#x27;delete&#x27; ]
+	 * @default [ 'head', 'get', 'put', 'post', 'delete' ]
 	 */
-	this._supportedMethods = [ &#x27;head&#x27;, &#x27;get&#x27;, &#x27;put&#x27;, &#x27;post&#x27;, &#x27;delete&#x27; ];
+	this._supportedMethods = [ 'head', 'get', 'put', 'post', 'delete' ];
 
 	/**
 	 * A hash of values to assemble into the API request path
@@ -2414,7 +2406,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 	// that are unspecified or empty strings, to create the full path template
 	var path = [
 		this._namespace
-	].concat( orderedPathParts ).filter( identity ).join( &#x27;/&#x27; );
+	].concat( orderedPathParts ).filter( identity ).join( '/' );
 
 	return path;
 }</pre></li>
@@ -2456,16 +2448,16 @@ WPRequest.prototype.toString = function() {
 	// Parse query parameters object into a query string, sorting the object
 	// properties by alphabetical order (consistent property ordering can make
 	// for easier caching of request URIs)
-	var queryString = qs.stringify( queryParams, { arrayFormat: &#x27;brackets&#x27; } )
-		.split( &#x27;&#x26;&#x27; )
+	var queryString = qs.stringify( queryParams, { arrayFormat: 'brackets' } )
+		.split( '&amp;' )
 		.sort()
-		.join( &#x27;&#x26;&#x27; );
+		.join( '&amp;' );
 
 	// Check if the endpoint contains a previous query and set the query character accordingly.
-	var queryCharacter = /\?/.test( this._options.endpoint ) ? &#x27;&#x26;&#x27; : &#x27;?&#x27;;
+	var queryCharacter = /\?/.test( this._options.endpoint ) ? '&amp;' : '?';
 
-	// Prepend a &#x22;?&#x22; (or a &#x22;&#x26;&#x22;) if a query is present, and return.
-	return ( queryString === &#x27;&#x27; ) ? &#x27;&#x27; : queryCharacter + queryString;
+	// Prepend a "?" (or a "&amp;") if a query is present, and return.
+	return ( queryString === '' ) ? '' : queryCharacter + queryString;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 * @return {String} The URI for the HTTP request to be sent
@@ -2496,12 +2488,12 @@ WPRequest.prototype.toString = function() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">auth = function ( credentials ) {
-	if ( typeof credentials === &#x27;object&#x27; ) {
-		if ( typeof credentials.username === &#x27;string&#x27; ) {
+	if ( typeof credentials === 'object' ) {
+		if ( typeof credentials.username === 'string' ) {
 			this._options.username = credentials.username;
 		}
 
-		if ( typeof credentials.password === &#x27;string&#x27; ) {
+		if ( typeof credentials.password === 'string' ) {
 			this._options.password = credentials.password;
 		}
 
@@ -2510,7 +2502,7 @@ WPRequest.prototype.toString = function() {
 		}
 	}
 
-	// Set the &#x22;auth&#x22; options flag that will force authentication on this request
+	// Set the "auth" options flag that will force authentication on this request
 	this._options.auth = true;
 
 	return this;
@@ -2522,13 +2514,13 @@ WPRequest.prototype.toString = function() {
 While using `WPAPI.discover( url )` to generate the handler for your site gets you up and running quickly, it does not provide the
  same level of customization as instantiating your own `new WPAPI` object. In order to specify authentication configuration when
  using autodiscovery, chain a `.then` onto the initial discovery query to call the `.auth` method on the returned site object with
- the relevant credentials (username &#x26; password, nonce, etc):
+ the relevant credentials (username &amp; password, nonce, etc):
 
 ```js
-var apiPromise = WPAPI.discover( &#x27;http://my-site.com&#x27; ).then(function( site ) {
+var apiPromise = WPAPI.discover( 'http://my-site.com' ).then(function( site ) {
     return site.<span class="apidocCodeKeywordSpan">auth</span>({
-        username: &#x27;admin&#x27;,
-        password: &#x27;always use secure passwords&#x27;
+        username: 'admin',
+        password: 'always use secure passwords'
     });
 });
 apiPromise.then(function( site ) {
@@ -2555,17 +2547,17 @@ apiPromise.then(function( site ) {
  * @param {String} context The context to set on the request
  * @return {WPRequest} The WPRequest instance (for chaining)
  */
-WPRequest.prototype.context = paramSetter( &#x27;context&#x27; );
+WPRequest.prototype.context = paramSetter( 'context' );
 
 /**
- * Convenience wrapper for `.<span class="apidocCodeKeywordSpan">context</span>( &#x27;edit&#x27; )`
+ * Convenience wrapper for `.<span class="apidocCodeKeywordSpan">context</span>( 'edit' )`
  *
  * @method edit
  * @chainable
  * @return {WPRequest} The WPRequest instance (for chaining)
  */
 WPRequest.prototype.edit = function() {
-	return this.context( &#x27;edit&#x27; );
+	return this.context( 'edit' );
 ...</pre></li>
     </ul>
 
@@ -2599,7 +2591,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -2623,8 +2615,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 ```
 The `wp` object has endpoint handler methods for every endpoint that ships with the default WordPress REST API plugin.
 
-Once you have used the chaining methods to describe a resource, you may call `.create()`, `.get()`, `.update()` or `.<span class
-="apidocCodeKeywordSpan">delete</span>()`  to send the API request to create, read, update or delete content within WordPress. These
+Once you have used the chaining methods to describe a resource, you may call `.create()`, `.get()`, `.update()` or `.<span class="apidocCodeKeywordSpan">delete</span>()`  to send the API request to create, read, update or delete content within WordPress. These
  methods are documented in further detail below.
 
 ### Self-signed (Insecure) HTTPS Certificates
@@ -2633,7 +2624,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -2647,7 +2638,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">edit = function () {
-	return this.context( &#x27;edit&#x27; );
+	return this.context( 'edit' );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2662,7 +2653,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">embed = function () {
-	return this.param( &#x27;_embed&#x27;, true );
+	return this.param( '_embed', true );
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 For security reasons, methods like `.revisions()` and `.settings()` require the request to be authenticated, and others such as `.
@@ -2677,7 +2668,7 @@ var uriString = wp.posts().id( 7 ).<span class="apidocCodeKeywordSpan">embed</sp
 ```
 
 As the name implies `.toString()` is not a chaining method, and will return a string containing the full URI; this can then be used
- with alternative HTTP transports like `request`, Node&#x27;s native `http`, `fetch`, or jQuery.
+ with alternative HTTP transports like `request`, Node's native `http`, `fetch`, or jQuery.
 
 ### API Query Parameters
 
@@ -2699,12 +2690,12 @@ To set a query parameter on a request, use the `.param()` method:
 </span>		return this.param( param, val );
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-site.myCustomResource().somePart( 7 ); // =&#x3e; myplugin/v1/resource/7
+site.myCustomResource().somePart( 7 ); // =&gt; myplugin/v1/resource/7
 ```
 
 Non-snake_cased route parameter names will be unaffected.
 
-### Query Parameters &#x26; Filtering Custom Routes
+### Query Parameters &amp; Filtering Custom Routes
 
 Many of the filtering methods available on the built-in collections are built in to custom-registered handlers, including `.page
 ()`, `.perPage()`, `.search()`, `.include()`/`.<span class="apidocCodeKeywordSpan">exclude</span>()` and `.slug()`; these parameters
@@ -2715,7 +2706,7 @@ However not _every_ filtering method is available by default, so for convenience
  like `.before()` or `.after()` to your own endpoints:
 
 ```js
-site.handler = site.registerRoute( &#x27;myplugin/v1&#x27;, &#x27;collection/(?P&#x3c;id&#x3e;)&#x27;, {
+site.handler = site.registerRoute( 'myplugin/v1', 'collection/(?P&lt;id&gt;)', {
 // Listing any of these parameters will assign the built-in
 // chaining method that handles the parameter:
 ...</pre></li>
@@ -2741,9 +2732,9 @@ site.handler = site.registerRoute( &#x27;myplugin/v1&#x27;, &#x27;collection/(?P
 
 The file to upload can be specified as
 
-- a `String` describing an image file path, _e.g._ `&#x27;/path/to/the/image.jpg&#x27;`
+- a `String` describing an image file path, _e.g._ `'/path/to/the/image.jpg'`
 - a `Buffer` with file content, _e.g._ `new Buffer()`
-- a file object from a `&#x3c;input&#x3e;` element, _e.g._ `document.getElementById( &#x27;file-input&#x27; ).files[0]`
+- a file object from a `&lt;input&gt;` element, _e.g._ `document.getElementById( 'file-input' ).files[0]`
 
 The file is passed into the `.<span class="apidocCodeKeywordSpan">file</span>()` method:
 
@@ -2836,12 +2827,12 @@ Additional querying methods provided, by endpoint:
 </span>		return this.param( param, val );
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-site.myCustomResource().somePart( 7 ); // =&#x3e; myplugin/v1/resource/7
+site.myCustomResource().somePart( 7 ); // =&gt; myplugin/v1/resource/7
 ```
 
 Non-snake_cased route parameter names will be unaffected.
 
-### Query Parameters &#x26; Filtering Custom Routes
+### Query Parameters &amp; Filtering Custom Routes
 
 Many of the filtering methods available on the built-in collections are built in to custom-registered handlers, including `.page
 ()`, `.perPage()`, `.search()`, `.<span class="apidocCodeKeywordSpan">include</span>()`/`.exclude()` and `.slug()`; these parameters
@@ -2852,7 +2843,7 @@ However not _every_ filtering method is available by default, so for convenience
  like `.before()` or `.after()` to your own endpoints:
 
 ```js
-site.handler = site.registerRoute( &#x27;myplugin/v1&#x27;, &#x27;collection/(?P&#x3c;id&#x3e;)&#x27;, {
+site.handler = site.registerRoute( 'myplugin/v1', 'collection/(?P&lt;id&gt;)', {
 // Listing any of these parameters will assign the built-in
 // chaining method that handles the parameter:
 ...</pre></li>
@@ -2880,11 +2871,11 @@ site.posts().then(function( posts ) {
 }); // etc
 
 // If custom routes were detected, they can be accessed via .<span class="apidocCodeKeywordSpan">namespace</span>()
-site.namespace( &#x27;myplugin/v1&#x27; ).authors()
+site.namespace( 'myplugin/v1' ).authors()
     .then(function( authors ) { /* ... */ });
 
 // Namespaces can be saved out to variables:
-var myplugin = site.namespace( &#x27;myplugin/v1&#x27; );
+var myplugin = site.namespace( 'myplugin/v1' );
 myplugin.authors()
     .id( 7 )
 ...</pre></li>
@@ -2906,7 +2897,7 @@ myplugin.authors()
     <li>example usage<pre class="apidocCodePre">...
 ### Using `offset`
 
-If you prefer to think about your collections in terms of _offset_, or how many items &#x22;into&#x22; the collection you want to
+If you prefer to think about your collections in terms of _offset_, or how many items "into" the collection you want to
  query, you can use the `offset` parameter (and parameter convenience method) instead of `page`. These are equivalent:
 
 ```js
@@ -2922,7 +2913,7 @@ By default `node-wpapi` uses the [superagent](https://www.npmjs.com/package/supe
  against the API endpoints. Superagent is a flexible tool that works on both the client and the browser, but you may want to use
  a different HTTP library, or to get data from a cache when available instead of making an HTTP request. To facilitate this, `node
 -wpapi` lets you supply a `transport` object when instantiating a site client to specify custom functions to use for one (or all
-) of GET, POST, PUT, DELETE &#x26; HEAD requests.
+) of GET, POST, PUT, DELETE &amp; HEAD requests.
 ...</pre></li>
     </ul>
 
@@ -2947,7 +2938,7 @@ wp.posts().perPage( 20 )...
 // 21st through 40th latest posts (*i.e.* the second page of results):
 wp.posts().perPage( 20 ).page( 2 )...
 // Order posts alphabetically by title:
-wp.posts().<span class="apidocCodeKeywordSpan">order</span>( &#x27;asc&#x27; ).orderby( &#x27;title&#x27; )...
+wp.posts().<span class="apidocCodeKeywordSpan">order</span>( 'asc' ).orderby( 'title' )...
 ```
 
 See the section on collection pagination for more information.
@@ -2980,7 +2971,7 @@ wp.posts().perPage( 20 )...
 // 21st through 40th latest posts (*i.e.* the second page of results):
 wp.posts().perPage( 20 ).page( 2 )...
 // Order posts alphabetically by title:
-wp.posts().order( &#x27;asc&#x27; ).<span class="apidocCodeKeywordSpan">orderby</span>( &#x27;title&#x27; )...
+wp.posts().order( 'asc' ).<span class="apidocCodeKeywordSpan">orderby</span>( 'title' )...
 ```
 
 See the section on collection pagination for more information.
@@ -3007,7 +2998,7 @@ A variety of other methods are available to further modify which posts are retur
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-Convenience methods are also available to set paging &#x26; sorting properties like `page`, `per_page` (available as `.perPage()`), `
+Convenience methods are also available to set paging &amp; sorting properties like `page`, `per_page` (available as `.perPage()`), `
 offset`, `order` and `orderby`:
 
 ```js
@@ -3016,7 +3007,7 @@ wp.posts().perPage( 20 )...
 // 21st through 40th latest posts (*i.e.* the second page of results):
 wp.posts().perPage( 20 ).<span class="apidocCodeKeywordSpan">page</span>( 2 )...
 // Order posts alphabetically by title:
-wp.posts().order( &#x27;asc&#x27; ).orderby( &#x27;title&#x27; )...
+wp.posts().order( 'asc' ).orderby( 'title' )...
 ```
 
 See the section on collection pagination for more information.
@@ -3035,14 +3026,14 @@ See the section on collection pagination for more information.
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">param = function ( props, value ) {
-	if ( ! props || typeof props === &#x27;string&#x27; &#x26;&#x26; value === undefined ) {
+	if ( ! props || typeof props === 'string' &amp;&amp; value === undefined ) {
 		// We have no property to set, or no value to set for that property
 		return this;
 	}
 
 	// We can use the same iterator function below to handle explicit key-value
 	// pairs if we convert them into to an object we can iterate over:
-	if ( typeof props === &#x27;string&#x27; ) {
+	if ( typeof props === 'string' ) {
 		props = keyValToObj( props, value );
 	}
 
@@ -3066,17 +3057,17 @@ var uriString = wp.posts().id( 7 ).embed().toString();
 ```
 
 As the name implies `.toString()` is not a chaining method, and will return a string containing the full URI; this can then be used
- with alternative HTTP transports like `request`, Node&#x27;s native `http`, `fetch`, or jQuery.
+ with alternative HTTP transports like `request`, Node's native `http`, `fetch`, or jQuery.
 
 ### API Query Parameters
 
 To set a query parameter on a request, use the `.<span class="apidocCodeKeywordSpan">param</span>()` method:
 
 ```js
-// All posts by author w/ ID &#x22;7&#x22; published before Sept 22, 2016
+// All posts by author w/ ID "7" published before Sept 22, 2016
 wp.posts()
-  .param( &#x27;before&#x27;, new Date( &#x27;2016-09-22&#x27; ) )
-  .param( &#x27;author&#x27;, 7 )...
+  .param( 'before', new Date( '2016-09-22' ) )
+  .param( 'author', 7 )...
 ```
 ...</pre></li>
     </ul>
@@ -3097,13 +3088,12 @@ wp.posts()
     <li>example usage<pre class="apidocCodePre">...
 
 // Supply the password for a password-protected post
-wp.posts().id( 2501 ).password( &#x27;correct horse battery staple&#x27; )...
+wp.posts().id( 2501 ).password( 'correct horse battery staple' )...
 ```
 
-#### Paging &#x26; Sorting
+#### Paging &amp; Sorting
 
-Convenience methods are also available to set paging &#x26; sorting properties like `page`, `per_page` (available as `.<span class
-="apidocCodeKeywordSpan">perPage</span>()`), `offset`, `order` and `orderby`:
+Convenience methods are also available to set paging &amp; sorting properties like `page`, `per_page` (available as `.<span class="apidocCodeKeywordSpan">perPage</span>()`), `offset`, `order` and `orderby`:
 
 ```js
 // perPage() sets the maximum number of posts to return. 20 latest posts:
@@ -3129,16 +3119,16 @@ wp.posts().perPage( 20 ).page( 2 )...
 	}</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // Find trashed posts
-wp.posts().status( &#x27;trash&#x27; )...
+wp.posts().status( 'trash' )...
 
-// Find posts in status &#x22;future&#x22; or &#x22;draft&#x22;
-wp.posts().status([ &#x27;draft&#x27;, &#x27;future&#x27; ])...
+// Find posts in status "future" or "draft"
+wp.posts().status([ 'draft', 'future' ])...
 
-// Find all categories containing the word &#x22;news&#x22;
-wp.categories().<span class="apidocCodeKeywordSpan">search</span>( &#x27;news&#x27; )...
+// Find all categories containing the word "news"
+wp.categories().<span class="apidocCodeKeywordSpan">search</span>( 'news' )...
 
 // Find posts from March 2013 (provide a Date object or full ISO-8601 date):
-wp.posts().before( &#x27;2013-04-01T00:00:00.000Z&#x27; ).after( new Date( &#x27;March 01, 2013&#x27; ) )...
+wp.posts().before( '2013-04-01T00:00:00.000Z' ).after( new Date( 'March 01, 2013' ) )...
 
 // Return ONLY sticky posts
 wp.posts().sticky( true )...
@@ -3156,7 +3146,7 @@ wp.posts().sticky( true )...
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setPathPart = function ( level, val ) {
 	if ( this._path[ level ] ) {
-		throw new Error( &#x27;Cannot overwrite value &#x27; + this._path[ level ] );
+		throw new Error( 'Cannot overwrite value ' + this._path[ level ] );
 	}
 	this._path[ level ] = val;
 
@@ -3168,7 +3158,7 @@ wp.posts().sticky( true )...
 		 */
 		this._levels = handlerSpec._levels;
 
-		// Configure handler for this endpoint&#x27;s root URL path &#x26; set namespace
+		// Configure handler for this endpoint's root URL path &amp; set namespace
 		this
 			.<span class="apidocCodeKeywordSpan">setPathPart</span>( 0, resource )
 			.namespace( namespace );
@@ -3203,13 +3193,13 @@ This library provides convenience methods for many of the most common parameters
 
 ```js
 // Find a page with a specific slug
-wp.pages().<span class="apidocCodeKeywordSpan">slug</span>( &#x27;about&#x27; )...
+wp.pages().<span class="apidocCodeKeywordSpan">slug</span>( 'about' )...
 
 // Find a post authored by the user with ID #42
 wp.posts().author( 42 )...
 
 // Find trashed posts
-wp.posts().status( &#x27;trash&#x27; )...
+wp.posts().status( 'trash' )...
 ...</pre></li>
     </ul>
 
@@ -3278,7 +3268,7 @@ var uriString = wp.posts().id( 7 ).embed().toString();
 ```
 
 As the name implies `.toString()` is not a chaining method, and will return a string containing the full URI; this can then be used
- with alternative HTTP transports like `request`, Node&#x27;s native `http`, `fetch`, or jQuery.
+ with alternative HTTP transports like `request`, Node's native `http`, `fetch`, or jQuery.
 ...</pre></li>
     </ul>
 
@@ -3312,7 +3302,7 @@ In a case where you would want to connect to a HTTPS WordPress installation that
  need to force a connection by placing the following line before you make any `wp` calls.
 
 ```javascript
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 ...</pre></li>
     </ul>
 
@@ -3341,7 +3331,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 	var path = [];
 	var valid = true;
 
-	for ( var level = 0; level &#x3c;= maxLevel; level++ ) {
+	for ( var level = 0; level &lt;= maxLevel; level++ ) {
 
 		if ( ! this._levels || ! this._levels[ level ] ) {
 			continue;
@@ -3354,13 +3344,13 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = &#x22;0&#x22;;
 			// Add the path value to the array
 			path.push( this._path[ level ] );
 		} else {
-			path.push( &#x27; ??? &#x27; );
+			path.push( ' ??? ' );
 			valid = false;
 		}
 	}
 
 	if ( ! valid ) {
-		throw new Error( &#x27;Incomplete URL! Missing component: /&#x27; + path.join( &#x27;/&#x27; ) );
+		throw new Error( 'Incomplete URL! Missing component: /' + path.join( '/' ) );
 	}
 
 	return this;
@@ -3393,3 +3383,4 @@ WPRequest.prototype._renderPath = function() {
     ]
 </div>
 </div>
+</body></html>
